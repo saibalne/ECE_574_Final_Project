@@ -1,0 +1,76 @@
+# =============================================================================
+# .gitignore - ECE-574 AXI4-Lite Formal Verification (Synopsys VC Formal)
+# Commit: RTL, properties, scripts, docs, and the small text reports in results/.
+# Ignore: tool databases, logs, waveforms, compile outputs, OS/editor junk.
+# =============================================================================
+
+# ---- VC Formal / VC Static run databases --------------------------------------
+vcst_rtdb/
+.vcst_rtdb/
+vcst_*/
+vc_static_*/
+*.vcst
+.fml*/
+fml_*/
+*_rtdb/
+
+# ---- VCS / compile outputs (VC Formal compiles with VCS front end) ------------
+csrc/
+simv
+simv.daidir/
+simv.vdb/
+*.daidir/
+.vcsmx_rebuild
+AN.DB/
+64/
+work/
+*.so
+*.o
+ucli.key
+vc_hdrs.h
+partitionlib/
+
+# ---- Verdi / waveform viewer ---------------------------------------------------
+verdiLog/
+verdi_config_file
+novas.rc
+novas.conf
+novas_dump.log
+novas.fsdb
+*.fsdb
+*.vpd
+*.vcd
+*.wlf
+DVEfiles/
+.restartSimSession.tcl.old
+*.rc.bak
+
+# ---- Logs and temp files -------------------------------------------------------
+*.log
+*.log.*
+*.key
+*.tmp
+*.bak
+*~
+*.swp
+*.swo
+nohup.out
+core
+core.*
+
+# ---- Keep the small report files we DO want in the repo ----------------------
+# (report_fv output saved as .txt under results/, CEX screenshots, bug matrix)
+!results/
+!results/**/
+!results/**/*.txt
+!results/**/*.png
+!results/**/*.csv
+!results/**/*.md
+
+# ---- OS / editor junk ----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.code-workspace
