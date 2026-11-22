@@ -1,4 +1,4 @@
-module axil_assume#(parameter int ADDR_WIDTH = 8,
+module axil_assume_read#(parameter int ADDR_WIDTH = 8,
   parameter int DATA_WIDTH = 32,
   parameter int NUM_REGS   = 4)(
     input  logic                      aclk,

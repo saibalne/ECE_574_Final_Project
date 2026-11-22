@@ -31,4 +31,26 @@ module axil_cover#(parameter int ADDR_WIDTH = 8,
   );
 
 
+  // Cover properties for AXI4-Lite interface
+  // cover that a AW transfer occurs
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_awvalid && s_axil_awready);
+  // cover that a W transfer occurs
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_wvalid && s_axil_wready);
+  // Cover that a write transaction occurs
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_awvalid && s_axil_awready && s_axil_wvalid && s_axil_wready);
+  // cover that response is valid
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_bvalid && s_axil_bready);
+  // Cover that a read transaction occurs
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_arvalid && s_axil_arready);
+  // Cover that a read response occurs
+  cover property (@(posedge aclk) disable iff(!aresetn) s_axil_rvalid && s_axil_rready);
+
+  
+
+
+
+  
+
+
+
 endmodule
