@@ -87,28 +87,45 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
         .s_axil_rready(s_axil_rready)
     );
 
-    axil_assume #(
+    axil_assert_write #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH),
         .NUM_REGS(NUM_REGS)
-    ) assume (
+    ) write_assertions (
         .aclk(aclk),
         .aresetn(aresetn),
     
         .s_axil_awaddr(s_axil_awaddr),
         .s_axil_awprot(s_axil_awprot),
         .s_axil_awvalid(s_axil_awvalid),
+        .s_axil_awready(s_axil_awready),
     
         .s_axil_wdata(s_axil_wdata),
         .s_axil_wstrb(s_axil_wstrb),
         .s_axil_wvalid(s_axil_wvalid),
+        .s_axil_wready(s_axil_wready),
     
-        .s_axil_bready(s_axil_bready),
+        .s_axil_bresp(s_axil_bresp),
+        .s_axil_bvalid(s_axil_bvalid),
+        .s_axil_bready(s_axil_bready)
+    );
+
+    axil_assert_read #(
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_REGS(NUM_REGS)
+    ) read_assertions (
+        .aclk(aclk),
+        .aresetn(aresetn),
     
         .s_axil_araddr(s_axil_araddr),
         .s_axil_arprot(s_axil_arprot),
         .s_axil_arvalid(s_axil_arvalid),
+        .s_axil_arready(s_axil_arready),
     
+        .s_axil_rdata(s_axil_rdata),
+        .s_axil_rresp(s_axil_rresp),
+        .s_axil_rvalid(s_axil_rvalid),
         .s_axil_rready(s_axil_rready)
     );
 
@@ -116,7 +133,7 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH),
         .NUM_REGS(NUM_REGS)
-    ) cover (
+    ) cover_properties (
         .aclk(aclk),
         .aresetn(aresetn),
     
@@ -145,6 +162,45 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
         .s_axil_rready(s_axil_rready)
     );
     
+    axil_assume_write #(
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_REGS(NUM_REGS)
+    ) write_assumptions (
+        .aclk(aclk),
+        .aresetn(aresetn),
+    
+        .s_axil_awaddr(s_axil_awaddr),
+        .s_axil_awprot(s_axil_awprot),
+        .s_axil_awvalid(s_axil_awvalid),
+        .s_axil_awready(s_axil_awready),
+    
+        .s_axil_wdata(s_axil_wdata),
+        .s_axil_wstrb(s_axil_wstrb),
+        .s_axil_wvalid(s_axil_wvalid),
+        .s_axil_wready(s_axil_wready),
+    
+        .s_axil_bresp(s_axil_bresp),
+        .s_axil_bvalid(s_axil_bvalid),
+        .s_axil_bready(s_axil_bready)
+    );
 
-
+    s_axil_assume_read #(
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_REGS(NUM_REGS)
+    ) read_assumptions (
+        .aclk(aclk),
+        .aresetn(aresetn),
+    
+        .s_axil_araddr(s_axil_araddr),
+        .s_axil_arprot(s_axil_arprot),
+        .s_axil_arvalid(s_axil_arvalid),
+        .s_axil_arready(s_axil_arready),
+    
+        .s_axil_rdata(s_axil_rdata),
+        .s_axil_rresp(s_axil_rresp),
+        .s_axil_rvalid(s_axil_rvalid),
+        .s_axil_rready(s_axil_rready)
+    );
 endmodule

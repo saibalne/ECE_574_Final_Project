@@ -17,7 +17,7 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
     // Write response channel
     input logic [1:0]                 s_axil_bresp,
     input logic                       s_axil_bvalid,
-    input  logic                      s_axil_bready,
+    input  logic                      s_axil_bready
   );
 
   // AW channel assertions
