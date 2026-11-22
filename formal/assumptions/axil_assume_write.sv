@@ -47,7 +47,8 @@ module axil_assume_write#(parameter int ADDR_WIDTH = 8,
     // B channel assumptions
     b_ready_eventually_asm: assume property (@(posedge aclk) disable iff(!aresetn) s_axil_bvalid |-> s_eventually(s_axil_bready));
 
-    
+    // Assume that all the signals have known values
+    known_asm: assume property (@(posedge aclk) $isunknown({s_axil_awaddr,s_axil_awprot,s_axil_awvalid,s_axil_wdata,s_axil_wstrb,s_axil_wvalid,s_axil_bready})==0);
    
 
     
