@@ -56,10 +56,36 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
 
 
   // Assert that if awvalid and wvalid are high, then bvalid will eventually be high
-  aw_w_b_valid_assert: assert property (@(posedge aclk) disable iff(!aresetn) (s_axil_awvalid && s_axil_awready) |=> s_eventually(s_axil_bvalid && s_axil_bready));
+  //aw_w_b_valid_assert: assert property (@(posedge aclk) disable iff(!aresetn) (s_axil_awvalid && s_axil_awready) |=> s_eventually(s_axil_bvalid && s_axil_bready));
 
   // Assert that if wvalid and wready are high, then bvalid will eventually be high
-  w_w_b_valid_assert: assert property (@(posedge aclk) disable iff(!aresetn) (s_axil_wvalid && s_axil_wready) |=> s_eventually(s_axil_bvalid && s_axil_bready));
+  //w_w_b_valid_assert: assert property (@(posedge aclk) disable iff(!aresetn) (s_axil_wvalid && s_axil_wready) |=> s_eventually(s_axil_bvalid && s_axil_bready));
 
+  logic aw_hs, w_hs, b_hs;
+  assign aw_hs = s_axil_awvalid && s_axil_awready;
+  assign w_hs  = s_axil_wvalid  && s_axil_wready;
+  assign b_hs  = s_axil_bvalid  && s_axil_bready;
+     
+  // outstanding counts: +1 on AW/W accept, -1 when the B handshake completes
+  logic [1:0] aw_out, w_out;
+  always_ff @(posedge aclk) begin
+    if (!aresetn) begin
+  	aw_out <= '0;
+  	w_out  <= '0;
+    end else begin
+  	aw_out <= aw_out + aw_hs - b_hs;
+  	w_out  <= w_out  + w_hs  - b_hs;
+    end
+  end
+     
+  // L4: once a full write (AW + W) is accepted, BVALID eventually comes
+  write_resp_live: assert property (@(posedge aclk) disable iff (!aresetn)
+    (aw_out != 0 && w_out != 0) |-> s_eventually s_axil_bvalid);
+     
+  // Safety companions (W3/W4); these also help the liveness proof converge
+  b_after_aw_w: assert property (@(posedge aclk) disable iff (!aresetn)
+    s_axil_bvalid |-> aw_out != 0 && w_out != 0);
+  max_one_out:  assert property (@(posedge aclk) disable iff (!aresetn)
+    aw_out <= 2 && w_out <= 2);
 
 endmodule

@@ -1,0 +1,63 @@
+
+  Summary Results
+   Property Summary: FPV
+   -----------------
+   > Assertion
+     - # found        : 13
+     - # proven       : 13
+
+   > Vacuity
+     - # found        : 20
+     - # non_vacuous  : 20
+
+   > Cover
+     - # found        : 6
+     - # covered      : 6
+
+   > Constraint
+     - # found        : 10
+
+
+  List Results
+   Property List:
+   --------------
+   > Assertion
+     # Assertion: 13
+     [   0] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.addr_aligned_assert
+     [   1] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.addr_in_range_assert
+     [   2] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.aw_ready_eventually_assert
+     [   3] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.aw_stable_assert
+     [   4] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.b_after_aw_w
+     [   5] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.b_ready_eventually_assert
+     [   6] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.b_resp_stable_assert
+     [   7] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.b_resp_valid_assert
+     [   8] proven                                  -  axil_fv_top.write_assertions.max_one_out
+     [   9] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.w_ready_eventually_assert
+     [  10] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.w_stable_assert
+     [  11] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.w_strb_nonzero_assert
+     [  12] proven                   (non_vacuous)  -  axil_fv_top.write_assertions.write_resp_live
+
+   > Cover
+     # Cover: 6
+     [  22] covered     (depth=1)                   -  axil_fv_top.cover_properties.cover_aw_transfer
+     [  23] covered     (depth=3)                   -  axil_fv_top.cover_properties.cover_b_valid
+     [  24] covered     (depth=3)                   -  axil_fv_top.cover_properties.cover_read_response
+     [  25] covered     (depth=1)                   -  axil_fv_top.cover_properties.cover_read_transaction
+     [  26] covered     (depth=1)                   -  axil_fv_top.cover_properties.cover_w_transfer
+     [  27] covered     (depth=1)                   -  axil_fv_top.cover_properties.cover_write_transaction
+
+   > Constraint
+     # Constraint: 10
+     [  13] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.addr_aligned_asm
+     [  14] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.addr_in_range_asm
+     [  15] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.aw_ready_eventually_asm
+     [  16] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.aw_stable_asm
+     [  17] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.b_ready_eventually_asm
+     [  18] constrained                             -  axil_fv_top.write_assumptions.known_asm
+     [  19] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.w_ready_eventually_asm
+     [  20] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.w_stable_asm
+     [  21] constrained              (non_vacuous)  -  axil_fv_top.write_assumptions.w_strb_nonzero_asm
+     [  28] constrained                             -  constant_28 - aresetn==1
+
+
+
