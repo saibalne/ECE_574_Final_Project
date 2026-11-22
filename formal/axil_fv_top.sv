@@ -19,40 +19,40 @@
 
 module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
   parameter int DATA_WIDTH = `DATA_WIDTH,
-  parameter int NUM_REGS   = `NUM_REGS);
+  parameter int NUM_REGS   = `NUM_REGS)(
 
-  input  logic                      aclk;
-  input  logic                      aresetn;
+  input  logic                      aclk,
+  input  logic                      aresetn,
 
   // Write address channel
-  input  logic [ADDR_WIDTH-1:0]     s_axil_awaddr;
-  input  logic [2:0]                s_axil_awprot;
-  input  logic                      s_axil_awvalid;
-  output logic                      s_axil_awready;
+  input  logic [ADDR_WIDTH-1:0]     s_axil_awaddr,
+  input  logic [2:0]                s_axil_awprot,
+  input  logic                      s_axil_awvalid,
+  output logic                      s_axil_awready,
 
   // Write data channel
-  input  logic [DATA_WIDTH-1:0]     s_axil_wdata;
-  input  logic [DATA_WIDTH/8-1:0]   s_axil_wstrb;
-  input  logic                      s_axil_wvalid;
-  output logic                      s_axil_wready;
+  input  logic [DATA_WIDTH-1:0]     s_axil_wdata,
+  input  logic [DATA_WIDTH/8-1:0]   s_axil_wstrb,
+  input  logic                      s_axil_wvalid,
+  output logic                      s_axil_wready,
 
   // Write response channel
-  output logic [1:0]                s_axil_bresp;
-  output logic                      s_axil_bvalid;
-  input  logic                      s_axil_bready;
+  output logic [1:0]                s_axil_bresp,
+  output logic                      s_axil_bvalid,
+  input  logic                      s_axil_bready,
 
   // Read address channel
-  input  logic [ADDR_WIDTH-1:0]     s_axil_araddr;
-  input  logic [2:0]                s_axil_arprot;
-  input  logic                      s_axil_arvalid;
-  output logic                      s_axil_arready;
+  input  logic [ADDR_WIDTH-1:0]     s_axil_araddr,
+  input  logic [2:0]                s_axil_arprot,
+  input  logic                      s_axil_arvalid,
+  output logic                      s_axil_arready,
 
   // Read data channel
-  output logic [DATA_WIDTH-1:0]     s_axil_rdata;
-  output logic [1:0]                s_axil_rresp;
-  output logic                      s_axil_rvalid;
-  input  logic                      s_axil_rready;
-
+  output logic [DATA_WIDTH-1:0]     s_axil_rdata,
+  output logic [1:0]                s_axil_rresp,
+  output logic                      s_axil_rvalid,
+  input  logic                      s_axil_rready
+  );
 
     axi4_lite_slave #(
         .ADDR_WIDTH(ADDR_WIDTH),

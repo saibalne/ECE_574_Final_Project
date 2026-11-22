@@ -4,3 +4,4 @@ formal/assertions/axil_assert_write.sv
 formal/assertions/axil_assert_read.sv
 formal/assumptions/axil_assume_write.sv
 formal/assumptions/axil_assume_read.sv
+formal/axil_fv_top.sv
