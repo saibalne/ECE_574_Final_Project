@@ -1,4 +1,6 @@
 rtl/axi4_lite_slave.sv
-formal/axil_assert.sv
-formal/axil_assume.sv
-formal/axil_cover.sv
+formal/cover_properties/axil_cover_write_read.sv
+formal/assertions/axil_assert_write.sv
+formal/assertions/axil_assert_read.sv
+formal/assumptions/axil_assume_write.sv
+formal/assumptions/axil_assume_read.sv
