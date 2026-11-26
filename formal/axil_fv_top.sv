@@ -185,7 +185,7 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
         .s_axil_bready(s_axil_bready)
     );
 
-    s_axil_assume_read #(
+    axil_assume_read #(
         .ADDR_WIDTH(ADDR_WIDTH),
         .DATA_WIDTH(DATA_WIDTH),
         .NUM_REGS(NUM_REGS)
