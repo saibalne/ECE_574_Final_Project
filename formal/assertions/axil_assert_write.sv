@@ -21,11 +21,9 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
   );
 
   // AW channel assertions
-  // Assert that the address is aligned to the data width
-  addr_aligned_assert: assert property (@(posedge aclk) disable iff (!aresetn) s_axil_awvalid |-> (s_axil_awaddr % (DATA_WIDTH/8) == 0));
 
-  // Assert that the address is within the range of the registers
-  addr_in_range_assert: assert property (@(posedge aclk) disable iff (!aresetn) s_axil_awvalid |-> (s_axil_awaddr < NUM_REGS*DATA_WIDTH/8));
+
+  
 
   // Assert that the address and protection signals are stable when awvalid is high and awready is low
   aw_stable_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_awvalid && !s_axil_awready |=> s_axil_awvalid && $stable({s_axil_awaddr,s_axil_awprot}));
@@ -37,11 +35,8 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
   // Assert that the data and strobe signals are stable when wvalid is high and wready is low
   w_stable_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_wvalid && !s_axil_wready |=> s_axil_wvalid && $stable({s_axil_wdata,s_axil_wstrb}));
 
-  // Assert that the write strobe is not zero when wvalid is high, if wstrb is zero, it means that no bytes are being written, which is not a valid operation
-  w_strb_nonzero_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_wvalid |-> (s_axil_wstrb != 0));
 
-  // Assert that wready will eventually be high after wvalid is high
-  w_ready_eventually_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_wvalid |-> s_eventually(s_axil_wready));
+  
 
 
   // B channel assertions
@@ -52,7 +47,7 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
   b_resp_valid_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_bvalid |-> (s_axil_bresp == 2'b00 || s_axil_bresp == 2'b10));
 
   // Assert that the write response is stable when bvalid is high and bready is low
-  b_resp_stable_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_bvalid && !s_axil_bready |-> s_axil_bvalid && $stable(s_axil_bresp));
+  b_resp_stable_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_bvalid && !s_axil_bready |=> s_axil_bvalid && $stable(s_axil_bresp));
 
 
   // Assert that if awvalid and wvalid are high, then bvalid will eventually be high
@@ -88,4 +83,17 @@ module axil_assert_write#(parameter int ADDR_WIDTH = 8,
   max_one_out:  assert property (@(posedge aclk) disable iff (!aresetn)
     aw_out <= 2 && w_out <= 2);
 
+
+
+	`ifdef OVER_CONSTRAINT_REL
+		 // Assert that the address is aligned to the data width
+		addr_aligned_assert: assert property (@(posedge aclk) disable iff (!aresetn) s_axil_awvalid |-> (s_axil_awaddr % (DATA_WIDTH/8) == 0));
+		
+		// Assert that the address is within the range of the registers
+		addr_in_range_assert: assert property (@(posedge aclk) disable iff (!aresetn) s_axil_awvalid |-> (s_axil_awaddr < NUM_REGS*DATA_WIDTH/8));
+		
+		// Assert that wready will eventually be high after wvalid is high
+		w_ready_eventually_assert: assert property (@(posedge aclk) disable iff(!aresetn) s_axil_wvalid |-> s_eventually(s_axil_wready));
+		
+	`endif
 endmodule

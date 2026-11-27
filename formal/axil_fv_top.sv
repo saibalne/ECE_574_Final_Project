@@ -12,9 +12,9 @@
     `define NUM_REGS   4
 `else
 	// Full
-	`define ADDR_WIDTH 8
+	`define ADDR_WIDTH 32
     `define DATA_WIDTH 32
-    `define NUM_REGS   4
+    `define NUM_REGS   1024
 `endif
 
 module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
