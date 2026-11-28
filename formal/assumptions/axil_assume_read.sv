@@ -24,7 +24,6 @@ w_read_address_stable: assume property (@(posedge aclk) disable iff (!aresetn) s
 // Valid address is valid until handshake occurs
 w_read_valid_stable: assume property (@(posedge aclk) disable iff (!aresetn) s_axil_arvalid && !s_axil_arready |=> s_axil_arvalid);
 
-
 // Master will eventually accept a handshake
 w_read_accept_handshake: assume property (@(posedge aclk) disable iff (!aresetn) s_axil_rvalid |-> s_eventually s_axil_rready);
 
@@ -37,4 +36,8 @@ w_read_inputs_not_unknown: assume property (@(posedge aclk) disable iff (!areset
 		w_read_addr_aligned: assume property (@(posedge aclk) disable iff (!aresetn) s_axil_arvalid |-> (s_axil_araddr % (DATA_WIDTH/8) == 0));
 
 	`endif
+// Address is not unknown if valid
+w_read_address_known: assume property (@(posedge aclk) disable iff (!aresetn) s_axil_arvalid |-> !$isunknown(s_axil_araddr));
+
+
 endmodule

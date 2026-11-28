@@ -51,8 +51,15 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
   output logic [DATA_WIDTH-1:0]     s_axil_rdata,
   output logic [1:0]                s_axil_rresp,
   output logic                      s_axil_rvalid,
-  input  logic                      s_axil_rready
+  input  logic                      s_axil_rready,
+    
+  input logic [$clog2(NUM_REGS)-1:0] sym_addr
   );
+    // Shadow register logic
+    logic [DATA_WIDTH-1:0]     sym_reg;
+    assign sym_reg = dut.regs[sym_addr];
+    // Shadow register address should stay constant
+    assume property (@(posedge aclk) ##1 sym_addr == $past(sym_addr));
 
     axi4_lite_slave #(
         .ADDR_WIDTH(ADDR_WIDTH),
@@ -203,4 +210,10 @@ module axil_fv_top#(parameter int ADDR_WIDTH = `ADDR_WIDTH,
         .s_axil_rvalid(s_axil_rvalid),
         .s_axil_rready(s_axil_rready)
     );
+
+    axil_data_integrity #(
+        .ADDR_WIDTH(ADDR_WIDTH),
+        .DATA_WIDTH(DATA_WIDTH),
+        .NUM_REGS(NUM_REGS)
+    ) data_integrity ( .* );
 endmodule
